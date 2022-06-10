@@ -1,32 +1,35 @@
 import { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 
-function Game() {
-  const GAME_STATES = ["IDLE", "PLAYING", "ENDED"];  // TODO: remove?
-  const [gameState, setGameState] = useState("IDLE");
+import {COUNTRIES_ALIASES, GAME_STATES, ALIAS_TO_COUNTRY} from './Constants'
 
+function Game() {
+  const [gameState, setGameState] = useState(GAME_STATES.IDLE);
+
+  console.log(COUNTRIES_ALIASES)
+  console.log(ALIAS_TO_COUNTRY)
 
   return (
     <div className="container border">
       <div className="row border">
         <div className="col-sm-6">
           <div className="m-2">
-            { gameState === "IDLE" && <Button onClick={() => setGameState("PLAYING")}>Start!</Button> }
+            { gameState === GAME_STATES.IDLE && <Button onClick={() => setGameState(GAME_STATES.PLAYING)}>Start!</Button> }
             {
-              gameState === "PLAYING" &&
+              gameState === GAME_STATES.PLAYING &&
                 (<Form>
                   <Form.Group>
                     <Form.Control />
                   </Form.Group>
                 </Form>)
             }
-            { gameState === "ENDED" && <Button onClick={() => setGameState("IDLE")}>Reset</Button> }
+            { gameState === GAME_STATES.ENDED && <Button onClick={() => setGameState(GAME_STATES.IDLE)}>Reset</Button> }
           </div>
         </div>
         <div className="col-sm-1" />
         <div className="col-sm-1">
           <div className="m-2">
-            { gameState === "PLAYING" && <Button onClick={() => setGameState("ENDED")}>End</Button> }
+            { gameState === GAME_STATES.PLAYING && <Button onClick={() => setGameState(GAME_STATES.ENDED)}>End</Button> }
           </div>
         </div>
         <div className="col-sm-2">

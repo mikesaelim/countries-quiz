@@ -1,29 +1,50 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { Button, Form } from 'react-bootstrap';
 
-import {COUNTRIES_ALIASES, GAME_STATES, ALIAS_TO_COUNTRY} from './Constants'
+import {ALIAS_TO_COUNTRY, COUNTRIES_ALIASES, GAME_STATES} from './Constants'
 
 function Game() {
   const [gameState, setGameState] = useState(GAME_STATES.IDLE);
+  const [guess, setGuess] = useState("");
+  const [guessedCountries, setGuessedCountries] = useState([]);
 
-  console.log(COUNTRIES_ALIASES)
-  console.log(ALIAS_TO_COUNTRY)
+  useEffect(() => {
+    const match = ALIAS_TO_COUNTRY.get(guess);
+    if (match) {
+      if (!guessedCountries.includes(match)) {
+        setGuessedCountries(oldValue => [...oldValue, match]);
+        setGuess("");
+      }
+    }
+  }, [guess, guessedCountries, setGuess, setGuessedCountries]);
 
   return (
     <div className="container border">
       <div className="row border">
         <div className="col-sm-6">
           <div className="m-2">
-            { gameState === GAME_STATES.IDLE && <Button onClick={() => setGameState(GAME_STATES.PLAYING)}>Start!</Button> }
+            {
+              gameState === GAME_STATES.IDLE &&
+                <Button onClick={() => setGameState(GAME_STATES.PLAYING)}>Start!</Button>
+            }
             {
               gameState === GAME_STATES.PLAYING &&
                 (<Form>
                   <Form.Group>
-                    <Form.Control />
+                    <Form.Control value={guess} onChange={(event) => setGuess(event.target.value)} />
                   </Form.Group>
                 </Form>)
             }
-            { gameState === GAME_STATES.ENDED && <Button onClick={() => setGameState(GAME_STATES.IDLE)}>Reset</Button> }
+            {
+              gameState === GAME_STATES.ENDED &&
+                <Button onClick={() => {
+                  setGameState(GAME_STATES.IDLE);
+                  setGuess("");
+                  setGuessedCountries([]);
+                }}>
+                  Reset
+                </Button>
+            }
           </div>
         </div>
         <div className="col-sm-1" />
@@ -34,7 +55,7 @@ function Game() {
         </div>
         <div className="col-sm-2">
           <div className="m-2">
-            0/200
+            { guessedCountries.length } / { COUNTRIES_ALIASES.size }
           </div>
         </div>
         <div className="col-sm-2">
@@ -46,6 +67,8 @@ function Game() {
       <div className="row border">
         <div className="col-sm-12 border" style={{height: "400px"}}>
           game results
+          <br />
+          { guessedCountries.sort().toString() }
         </div>
       </div>
     </div>

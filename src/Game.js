@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import { Button, Form } from 'react-bootstrap';
 
 import {ALIAS_TO_COUNTRY, COUNTRIES_ALIASES, GAME_STATES} from './Constants'
@@ -6,19 +6,20 @@ import {ALIAS_TO_COUNTRY, COUNTRIES_ALIASES, GAME_STATES} from './Constants'
 function Game() {
   const [gameState, setGameState] = useState(GAME_STATES.IDLE);
   const [guess, setGuess] = useState("");
-  const [guessedCountries, setGuessedCountries] = useState([]);
+  const [guessedCountries, setGuessedCountries] = useState(new Set());
 
-  useEffect(() => {
-    if (guess === "") return;
+  function handleGuess(newGuess) {
+    setGuess(newGuess);
+    if (newGuess === "") return;
 
-    const match = ALIAS_TO_COUNTRY.get(guess.toLowerCase());
+    const match = ALIAS_TO_COUNTRY.get(newGuess.toLowerCase());
     if (match) {
-      if (!guessedCountries.includes(match)) {
-        setGuessedCountries(oldValue => [...oldValue, match]);
+      if (!guessedCountries.has(match)) {
+        setGuessedCountries((oldValue => new Set([...oldValue, match])))
         setGuess("");
       }
     }
-  }, [guess, guessedCountries]);
+  };
 
   return (
     <div className="container border">
@@ -33,7 +34,7 @@ function Game() {
               gameState === GAME_STATES.PLAYING &&
                 (<Form>
                   <Form.Group>
-                    <Form.Control value={guess} onChange={(event) => setGuess(event.target.value)} />
+                    <Form.Control value={guess} onChange={(event) => handleGuess(event.target.value)} />
                   </Form.Group>
                 </Form>)
             }
@@ -42,7 +43,7 @@ function Game() {
                 <Button onClick={() => {
                   setGameState(GAME_STATES.IDLE);
                   setGuess("");
-                  setGuessedCountries([]);
+                  setGuessedCountries(new Set());
                 }}>
                   Reset
                 </Button>
@@ -57,7 +58,7 @@ function Game() {
         </div>
         <div className="col-sm-2">
           <div className="m-2">
-            { guessedCountries.length } / { COUNTRIES_ALIASES.size }
+            { guessedCountries.size } / { COUNTRIES_ALIASES.size }
           </div>
         </div>
         <div className="col-sm-2">
@@ -71,7 +72,7 @@ function Game() {
           game results
           <br />
           <br />
-          { guessedCountries.sort().toString() }
+          { [...guessedCountries].sort().toString() }
         </div>
       </div>
     </div>

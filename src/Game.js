@@ -9,14 +9,16 @@ function Game() {
   const [guessedCountries, setGuessedCountries] = useState([]);
 
   useEffect(() => {
-    const match = ALIAS_TO_COUNTRY.get(guess);
+    if (guess === "") return;
+
+    const match = ALIAS_TO_COUNTRY.get(guess.toLowerCase());
     if (match) {
       if (!guessedCountries.includes(match)) {
         setGuessedCountries(oldValue => [...oldValue, match]);
         setGuess("");
       }
     }
-  }, [guess, guessedCountries, setGuess, setGuessedCountries]);
+  }, [guess, guessedCountries]);
 
   return (
     <div className="container border">
@@ -67,6 +69,7 @@ function Game() {
       <div className="row border">
         <div className="col-sm-12 border" style={{height: "400px"}}>
           game results
+          <br />
           <br />
           { guessedCountries.sort().toString() }
         </div>

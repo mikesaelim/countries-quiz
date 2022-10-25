@@ -11,7 +11,7 @@ export const COUNTRIES_ALIASES = new Map([
 ]);
 
 export const ALIAS_TO_COUNTRY = (() => {
-    let map = new Map();
+    const map = new Map();
     COUNTRIES_ALIASES.forEach((aliases, country) => {
         map.set(country.toLowerCase(), country);
         aliases.forEach(alias => map.set(alias.toLowerCase(), country));

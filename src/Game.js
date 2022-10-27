@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Button, Form} from 'react-bootstrap';
 
 import {ALIAS_TO_COUNTRY, COUNTRIES_ALIASES, GAME_STATES} from './Constants'
@@ -19,7 +19,23 @@ function Game() {
         setGuess("");
       }
     }
-  };
+  }
+
+  useEffect(() => {
+    if (guessedCountries.size === COUNTRIES_ALIASES.size) {
+      endGame();
+    }
+  }, [guessedCountries]);
+
+  function endGame() {
+    setGameState(GAME_STATES.ENDED);
+  }
+
+  function resetGame() {
+    setGameState(GAME_STATES.IDLE);
+    setGuess("");
+    setGuessedCountries(new Set());
+  }
 
   return (
     <div className="container border">
@@ -40,11 +56,7 @@ function Game() {
             }
             {
               gameState === GAME_STATES.ENDED &&
-                <Button onClick={() => {
-                  setGameState(GAME_STATES.IDLE);
-                  setGuess("");
-                  setGuessedCountries(new Set());
-                }}>
+                <Button onClick={resetGame}>
                   Reset
                 </Button>
             }
@@ -53,7 +65,7 @@ function Game() {
         <div className="col-sm-1" />
         <div className="col-sm-1">
           <div className="m-2">
-            { gameState === GAME_STATES.PLAYING && <Button onClick={() => setGameState(GAME_STATES.ENDED)}>End</Button> }
+            { gameState === GAME_STATES.PLAYING && <Button onClick={endGame}>End</Button> }
           </div>
         </div>
         <div className="col-sm-2">
@@ -69,10 +81,19 @@ function Game() {
       </div>
       <div className="row border">
         <div className="col-sm-12 border" style={{height: "400px"}}>
-          game results
-          <br />
+          Correct:
           <br />
           { [...guessedCountries].sort().toString() }
+          {
+            gameState === GAME_STATES.ENDED &&
+            <>
+              <br />
+              <br />
+              Missed:
+              <br />
+              { [...COUNTRIES_ALIASES.keys()].filter((k) => !guessedCountries.has(k)).sort().toString() }
+            </>
+          }
         </div>
       </div>
     </div>

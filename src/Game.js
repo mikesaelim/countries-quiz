@@ -1,7 +1,8 @@
 import {useState} from 'react';
-import { Button, Form } from 'react-bootstrap';
+import {Button, Form} from 'react-bootstrap';
 
 import {ALIAS_TO_COUNTRY, COUNTRIES_ALIASES, GAME_STATES} from './Constants'
+import {standardizeGuess} from './Standardize'
 
 function Game() {
   const [gameState, setGameState] = useState(GAME_STATES.IDLE);
@@ -10,9 +11,8 @@ function Game() {
 
   function handleGuess(newGuess) {
     setGuess(newGuess);
-    if (newGuess === "") return;
 
-    const match = ALIAS_TO_COUNTRY.get(newGuess.toLowerCase());
+    const match = ALIAS_TO_COUNTRY.get(standardizeGuess(newGuess));
     if (match) {
       if (!guessedCountries.has(match)) {
         setGuessedCountries((oldValue => new Set([...oldValue, match])))

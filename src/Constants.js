@@ -7,8 +7,14 @@ export const GAME_STATES = {
 };
 
 export const COUNTRIES_ALIASES = new Map([
+    ["Antigua and Barbuda", []],
+    ["China", ["People's Republic of China", "PRC"]],
     ["Czech Republic", ["Czechia"]],
-    ["Mali", []]
+    ["Guinea-Bissau", []],
+    ["Ivory Coast", ["Côte d'Ivoire"]],
+    ["Mali", []],
+    ["São Tomé and Príncipe", []],
+    ["Taiwan", ["Republic of China", "ROC"]]
 ]);
 
 export const ALIAS_TO_COUNTRY = (() => {

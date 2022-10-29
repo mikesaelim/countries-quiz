@@ -1,0 +1,13 @@
+.App .text-results ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.App .text-results .last-match {
+  color: green;
+}
+
+.App .text-results .missed {
+  color: red;
+}

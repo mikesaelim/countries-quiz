@@ -1,13 +1,15 @@
 import {useEffect, useState} from 'react';
 import {Button, Form} from 'react-bootstrap';
 
-import {ALIAS_TO_COUNTRY, COUNTRIES_ALIASES, GAME_STATES} from './Constants'
-import {standardizeGuess} from './Standardize'
+import {ALIAS_TO_COUNTRY, COUNTRIES_ALIASES, GAME_STATES} from './Constants';
+import {standardizeGuess} from './Standardize';
+import TextResults from './TextResults';
 
 function Game() {
   const [gameState, setGameState] = useState(GAME_STATES.IDLE);
   const [guess, setGuess] = useState("");
   const [guessedCountries, setGuessedCountries] = useState(new Set());
+  const [lastMatch, setLastMatch] = useState("");
 
   function handleGuess(newGuess) {
     setGuess(newGuess);
@@ -15,7 +17,8 @@ function Game() {
     const match = ALIAS_TO_COUNTRY.get(standardizeGuess(newGuess));
     if (match) {
       if (!guessedCountries.has(match)) {
-        setGuessedCountries((oldValue => new Set([...oldValue, match])))
+        setGuessedCountries((oldValue => new Set([...oldValue, match])));
+        setLastMatch(match);
         setGuess("");
       }
     }
@@ -35,6 +38,7 @@ function Game() {
     setGameState(GAME_STATES.IDLE);
     setGuess("");
     setGuessedCountries(new Set());
+    setLastMatch("");
   }
 
   return (
@@ -81,19 +85,11 @@ function Game() {
       </div>
       <div className="row border">
         <div className="col-sm-12 border" style={{height: "400px"}}>
-          Correct:
-          <br />
-          { [...guessedCountries].sort().toString() }
-          {
-            gameState === GAME_STATES.ENDED &&
-            <>
-              <br />
-              <br />
-              Missed:
-              <br />
-              { [...COUNTRIES_ALIASES.keys()].filter((k) => !guessedCountries.has(k)).sort().toString() }
-            </>
-          }
+          <TextResults
+            guessedCountries={guessedCountries}
+            showMissed={gameState === GAME_STATES.ENDED}
+            lastMatch={lastMatch}
+          />
         </div>
       </div>
     </div>

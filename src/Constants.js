@@ -1,4 +1,4 @@
-import {standardizeGuess} from './Standardize'
+import {standardizeGuess} from './Standardize';
 
 export const GAME_STATES = {
     IDLE: "IDLE",

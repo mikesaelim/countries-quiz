@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Button, Form} from 'react-bootstrap';
 
+import './Game.css';
 import {ALIAS_TO_COUNTRY, COUNTRIES_ALIASES, GAME_STATES} from './Constants';
 import {standardizeGuess} from './Standardize';
 import TextResults from './TextResults';
@@ -32,6 +33,8 @@ function Game() {
 
   function endGame() {
     setGameState(GAME_STATES.ENDED);
+    setGuess("");
+    setLastMatch("");
   }
 
   function resetGame() {
@@ -43,33 +46,28 @@ function Game() {
 
   return (
     <div className="container border">
-      <div className="row border">
+      <div className="row controls">
         <div className="col-sm-6">
+          <div className="m-2">
+            <Form>
+              <Form.Group>
+                <Form.Control
+                  value={guess}
+                  onChange={(event) => handleGuess(event.target.value)}
+                  disabled={gameState !== GAME_STATES.PLAYING}
+                />
+              </Form.Group>
+            </Form>
+          </div>
+        </div>
+        <div className="col-sm-2">
           <div className="m-2">
             {
               gameState === GAME_STATES.IDLE &&
                 <Button onClick={() => setGameState(GAME_STATES.PLAYING)}>Start!</Button>
             }
-            {
-              gameState === GAME_STATES.PLAYING &&
-                (<Form>
-                  <Form.Group>
-                    <Form.Control value={guess} onChange={(event) => handleGuess(event.target.value)} />
-                  </Form.Group>
-                </Form>)
-            }
-            {
-              gameState === GAME_STATES.ENDED &&
-                <Button onClick={resetGame}>
-                  Reset
-                </Button>
-            }
-          </div>
-        </div>
-        <div className="col-sm-1" />
-        <div className="col-sm-1">
-          <div className="m-2">
             { gameState === GAME_STATES.PLAYING && <Button onClick={endGame}>End</Button> }
+            { gameState === GAME_STATES.ENDED && <Button onClick={resetGame}>Reset</Button> }
           </div>
         </div>
         <div className="col-sm-2">

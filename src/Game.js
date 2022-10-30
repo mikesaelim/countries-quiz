@@ -49,13 +49,20 @@ function Game() {
       <div className="row controls">
         <div className="col-sm-6">
           <div className="m-2">
-            <Form>
+            <Form onSubmit={(event) => event.preventDefault()}>
               <Form.Group>
-                <Form.Control
-                  value={guess}
-                  onChange={(event) => handleGuess(event.target.value)}
-                  disabled={gameState !== GAME_STATES.PLAYING}
-                />
+                {
+                  gameState === GAME_STATES.PLAYING &&
+                    <Form.Control
+                      value={guess}
+                      onChange={(event) => handleGuess(event.target.value)}
+                      autoFocus
+                    />
+                }
+                {
+                  gameState !== GAME_STATES.PLAYING &&
+                    <Form.Control disabled />
+                }
               </Form.Group>
             </Form>
           </div>

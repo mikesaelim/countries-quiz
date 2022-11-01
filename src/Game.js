@@ -45,7 +45,7 @@ function Game() {
   }
 
   return (
-    <div className="container border">
+    <div className="container game">
       <div className="row controls">
         <div className="col-sm-6">
           <div className="m-2">
@@ -88,8 +88,8 @@ function Game() {
           </div>
         </div>
       </div>
-      <div className="row border">
-        <div className="col-sm-12 border" style={{height: "400px"}}>
+      <div className="row">
+        <div className="col-sm-12">
           <TextResults
             guessedCountries={guessedCountries}
             showMissed={gameState === GAME_STATES.ENDED}

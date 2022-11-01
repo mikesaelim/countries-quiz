@@ -1,7 +1,7 @@
-.App {
-  text-align: center;
-}
-
 .App .content {
   max-width: 1080px;
+}
+
+.App .title {
+  text-align: center;
 }

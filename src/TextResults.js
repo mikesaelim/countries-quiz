@@ -1,6 +1,6 @@
-import './TextResults.css';
+import "./TextResults.css";
 
-import {COUNTRIES_ALIASES} from './Constants';
+import {COUNTRIES_ALIASES} from "./Constants";
 
 function TextResults(props) {
   var countries;
@@ -31,17 +31,17 @@ function TextResults(props) {
       </div>
       <div className="col-sm-3">
         <ul>
-        { countries.slice(50, 100) }
+          { countries.slice(50, 100) }
         </ul>
       </div>
       <div className="col-sm-3">
         <ul>
-        { countries.slice(100, 150) }
+          { countries.slice(100, 150) }
         </ul>
       </div>
       <div className="col-sm-3">
         <ul>
-        { countries.slice(150, 200) }
+          { countries.slice(150, 200) }
         </ul>
       </div>
     </div>

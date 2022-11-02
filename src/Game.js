@@ -1,10 +1,10 @@
-import {useEffect, useState} from 'react';
-import {Button, Form} from 'react-bootstrap';
+import {useEffect, useState} from "react";
+import {Button, Form} from "react-bootstrap";
 
-import './Game.css';
-import {ALIAS_TO_COUNTRY, COUNTRIES_ALIASES, GAME_STATES} from './Constants';
-import {standardizeGuess} from './Standardize';
-import TextResults from './TextResults';
+import "./Game.css";
+import {ALIAS_TO_COUNTRY, COUNTRIES_ALIASES, GAME_STATES} from "./Constants";
+import {standardizeGuess} from "./Standardize";
+import TextResults from "./TextResults";
 
 function Game() {
   const [gameState, setGameState] = useState(GAME_STATES.IDLE);

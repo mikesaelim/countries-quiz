@@ -7,6 +7,8 @@ export const GAME_STATES = {
 };
 
 export const COUNTRIES_ALIASES = new Map([
+    // Mostly taken from https://en.wikipedia.org/wiki/List_of_sovereign_states
+    // plus Kosovo and Taiwan
     ["Afghanistan", []],
     ["Albania", []],
     ["Algeria", []],
@@ -18,7 +20,7 @@ export const COUNTRIES_ALIASES = new Map([
     ["Australia", []],
     ["Austria", []],
     ["Azerbaijan", []],
-    ["Bahamas", ["The Bahamas"]],  // TODO: How to handle articles?  ordering?
+    ["Bahamas", ["The Bahamas"]],
     ["Bahrain", []],
     ["Bangladesh", []],
     ["Barbados", []],
@@ -45,13 +47,12 @@ export const COUNTRIES_ALIASES = new Map([
     ["China", ["People's Republic of China", "PRC"]],
     ["Colombia", []],
     ["Comoros", ["The Comoros"]],
-    ["Democratic Republic of the Congo", ["DRC", "DROC", "Congo-Kinshasa"]],  // TODO: other informal names.  also ordering?
-    ["Republic of the Congo", ["Congo Republic", "Congo-Brazzaville"]],  // TODO: other informal names.  also ordering?
     ["Costa Rica", []],
     ["Croatia", []],
     ["Cuba", []],
     ["Cyprus", []],
     ["Czech Republic", ["Czechia"]],
+    ["Democratic Republic of the Congo", ["DRC", "DROC", "Congo-Kinshasa"]],
     ["Denmark", []],
     ["Djibouti", []],
     ["Dominica", []],
@@ -69,7 +70,7 @@ export const COUNTRIES_ALIASES = new Map([
     ["Finland", []],
     ["France", []],
     ["Gabon", []],
-    ["Gambia", ["The Gambia"]],  // TODO: how to handle articles?
+    ["Gambia", ["The Gambia"]],
     ["Georgia", []],
     ["Germany", []],
     ["Ghana", []],
@@ -97,8 +98,6 @@ export const COUNTRIES_ALIASES = new Map([
     ["Kazakhstan", []],
     ["Kenya", []],
     ["Kiribati", []],
-    ["North Korea", ["Democratic People's Republic of Korea", "DPRK"]],  // TODO: ordering
-    ["South Korea", ["Republic of Korea", "ROK"]],  // TODO: ordering
     ["Kosovo", []],
     ["Kuwait", []],
     ["Kyrgyzstan", []],
@@ -121,7 +120,7 @@ export const COUNTRIES_ALIASES = new Map([
     ["Mauritania", []],
     ["Mauritius", []],
     ["Mexico", []],
-    ["Micronesia", ["Federated States of Micronesia", "FSM"]],  // TODO: is FSM more official?  ordering?
+    ["Micronesia", ["Federated States of Micronesia", "FSM"]],
     ["Moldova", []],
     ["Monaco", []],
     ["Mongolia", []],
@@ -137,6 +136,7 @@ export const COUNTRIES_ALIASES = new Map([
     ["Nicaragua", []],
     ["Niger", ["The Niger"]],
     ["Nigeria", []],
+    ["North Korea", ["Democratic People's Republic of Korea", "DPRK"]],
     ["North Macedonia", ["Macedonia"]],
     ["Norway", []],
     ["Oman", []],
@@ -151,6 +151,7 @@ export const COUNTRIES_ALIASES = new Map([
     ["Poland", []],
     ["Portugal", []],
     ["Qatar", []],
+    ["Republic of the Congo", ["Congo Republic", "Congo-Brazzaville"]],
     ["Romania", []],
     ["Russia", []],
     ["Rwanda", []],
@@ -171,6 +172,7 @@ export const COUNTRIES_ALIASES = new Map([
     ["Solomon Islands", []],
     ["Somalia", []],
     ["South Africa", ["RSA"]],
+    ["South Korea", ["Republic of Korea", "ROK"]],
     ["South Sudan", []],
     ["Spain", []],
     ["Sri Lanka", []],

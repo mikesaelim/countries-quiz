@@ -1,9 +1,9 @@
 .App .game {
   border: thick double;
-  text-align: center;
 }
 
 .App .game .controls {
   max-width: 800px;
   margin: auto;
+  text-align: center;
 }

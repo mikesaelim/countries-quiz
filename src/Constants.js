@@ -99,6 +99,7 @@ export const COUNTRIES_ALIASES = new Map([
     ["Kiribati", []],
     ["North Korea", ["Democratic People's Republic of Korea", "DPRK"]],  // TODO: ordering
     ["South Korea", ["Republic of Korea", "ROK"]],  // TODO: ordering
+    ["Kosovo", []],
     ["Kuwait", []],
     ["Kyrgyzstan", []],
     ["Laos", []],

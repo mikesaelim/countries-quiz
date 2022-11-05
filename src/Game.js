@@ -6,10 +6,10 @@ import {ALIAS_TO_COUNTRY, COUNTRIES_ALIASES, GAME_STATES} from "./Constants";
 import {standardizeGuess} from "./Standardize";
 import TextResults from "./TextResults";
 
-function Game() {
+function Game(props) {
   const [gameState, setGameState] = useState(GAME_STATES.IDLE);
   const [guess, setGuess] = useState("");
-  const [guessedCountries, setGuessedCountries] = useState(new Set());
+  const [guessedCountries, setGuessedCountries] = useState(props.initialGuessedCountries || new Set());
   const [lastMatch, setLastMatch] = useState("");
 
   function handleGuess(newGuess) {

@@ -11,6 +11,7 @@ describe("Game", () => {
     expect(input).toHaveValue("");
     expect(input).toBeDisabled();
     expect(screen.getByText("Start!", { selector: "button" })).toBeInTheDocument();
+    expect(screen.getByText("15:00")).toBeInTheDocument();
     expect(screen.queryByRole("listitem")).not.toBeInTheDocument();
   });
 
@@ -62,6 +63,16 @@ describe("Game", () => {
       expect(screen.getByText("Reset", { selector: "button" })).toBeInTheDocument();
       expect(screen.getAllByRole("listitem").length).toEqual(COUNTRIES_ALIASES.size);
     });
+
+    test("ends when time runs out", async () => {
+      const user = userEvent.setup();
+      render(<Game timerStartValues={{seconds: 1}} />);
+      await user.click(screen.getByText("Start!"));
+
+      await screen.findByText("00:00", {}, {timeout: 2000});
+      expect(screen.getByText("Reset", { selector: "button"})).toBeInTheDocument();
+      expect(screen.getAllByRole("listitem").length).toEqual(COUNTRIES_ALIASES.size);
+    });
   });
 
   describe("in the ended state", () => {
@@ -80,6 +91,7 @@ describe("Game", () => {
       expect(input).toHaveValue("");
       expect(input).toBeDisabled();
       expect(screen.getByText("Start!", { selector: "button" })).toBeInTheDocument();
+      expect(screen.getByText("15:00")).toBeInTheDocument();
       expect(screen.queryByRole("listitem")).not.toBeInTheDocument();
     });
   });

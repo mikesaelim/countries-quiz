@@ -1,5 +1,6 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {Button, Form} from "react-bootstrap";
+import useTimer from "easytimer-react-hook";
 
 import "./Game.css";
 import {ALIAS_TO_COUNTRY, COUNTRIES_ALIASES, GAME_STATES} from "./Constants";
@@ -11,6 +12,33 @@ function Game(props) {
   const [guess, setGuess] = useState("");
   const [guessedCountries, setGuessedCountries] = useState(props.initialGuessedCountries || new Set());
   const [lastMatch, setLastMatch] = useState("");
+  const [timer, timesUp] = useTimer({
+    startValues: props.timerStartValues || {minutes: 15},
+    target: {seconds: 0},
+    countdown: true,
+    updateWhenTargetAchieved: true
+  });
+
+  function startGame() {
+    setGameState(GAME_STATES.PLAYING);
+    timer.start();
+  }
+
+  const endGame = useCallback(() => {
+    setGameState(GAME_STATES.ENDED);
+    setGuess("");
+    setLastMatch("");
+    timer.pause();
+  }, [timer]);
+
+  function resetGame() {
+    setGameState(GAME_STATES.IDLE);
+    setGuess("");
+    setGuessedCountries(new Set());
+    setLastMatch("");
+    timer.reset();
+    timer.pause(); // easytimer.js is strange in that reset automatically restarts the timer
+  }
 
   function handleGuess(newGuess) {
     setGuess(newGuess);
@@ -26,23 +54,10 @@ function Game(props) {
   }
 
   useEffect(() => {
-    if (guessedCountries.size === COUNTRIES_ALIASES.size) {
+    if (timesUp || guessedCountries.size === COUNTRIES_ALIASES.size) {
       endGame();
     }
-  }, [guessedCountries]);
-
-  function endGame() {
-    setGameState(GAME_STATES.ENDED);
-    setGuess("");
-    setLastMatch("");
-  }
-
-  function resetGame() {
-    setGameState(GAME_STATES.IDLE);
-    setGuess("");
-    setGuessedCountries(new Set());
-    setLastMatch("");
-  }
+  }, [timesUp, guessedCountries, endGame]);
 
   return (
     <div className="container game">
@@ -69,10 +84,7 @@ function Game(props) {
         </div>
         <div className="col-sm-2">
           <div className="m-2">
-            {
-              gameState === GAME_STATES.IDLE &&
-                <Button onClick={() => setGameState(GAME_STATES.PLAYING)}>Start!</Button>
-            }
+            { gameState === GAME_STATES.IDLE && <Button onClick={startGame}>Start!</Button> }
             { gameState === GAME_STATES.PLAYING && <Button onClick={endGame}>End</Button> }
             { gameState === GAME_STATES.ENDED && <Button onClick={resetGame}>Reset</Button> }
           </div>
@@ -84,7 +96,7 @@ function Game(props) {
         </div>
         <div className="col-sm-2">
           <div className="m-2">
-            15:00
+            {timer.getTimeValues().toString(["minutes", "seconds"])}
           </div>
         </div>
       </div>

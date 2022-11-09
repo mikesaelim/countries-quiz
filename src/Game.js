@@ -63,7 +63,7 @@ function Game(props) {
 
   return (
     <div className="container game">
-      <div className="row controls">
+      <div className="row align-items-center controls">
         <div className="col-sm-6">
           <div className="m-2">
             <Form onSubmit={(event) => event.preventDefault()}>

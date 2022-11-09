@@ -3,7 +3,8 @@ import {standardizeGuess} from "./Standardize";
 export const GAME_STATES = {
   IDLE: "IDLE",
   PLAYING: "PLAYING",
-  ENDED: "ENDED"
+  WON: "WON",
+  LOST: "LOST"
 };
 
 export const COUNTRIES_ALIASES = new Map([

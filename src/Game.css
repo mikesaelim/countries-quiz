@@ -7,3 +7,9 @@
   margin: auto;
   text-align: center;
 }
+
+.App .game .controls .won {
+  color: green;
+  font-size: large;
+  font-weight: bold;
+}

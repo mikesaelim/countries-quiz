@@ -16,7 +16,7 @@ describe("Game", () => {
   });
 
   describe("in the playing state", () => {
-    test("accepts correct guesses, and allows the game to be ended early", async () => {
+    test("accepts correct guesses, and allows the game to be ended early with a loss", async () => {
       const user = userEvent.setup();
       render(<Game />);
       await user.click(screen.getByText("Start!"));
@@ -50,7 +50,7 @@ describe("Game", () => {
       expect(screen.getAllByRole("listitem").length).toEqual(COUNTRIES_ALIASES.size);
     });
 
-    test("ends when all countries are guessed", async () => {
+    test("ends with a win when all countries are guessed", async () => {
       const initialGuessedCountries = new Set([...COUNTRIES_ALIASES.keys()].filter(c => c !== "San Marino"));
 
       const user = userEvent.setup();
@@ -60,16 +60,20 @@ describe("Game", () => {
       const input = screen.getByRole("textbox");
       await user.type(input, "San Marino");
 
+      expect(screen.getByText("YOU WIN!")).toBeInTheDocument();
       expect(screen.getByText("Reset", { selector: "button" })).toBeInTheDocument();
       expect(screen.getAllByRole("listitem").length).toEqual(COUNTRIES_ALIASES.size);
     });
 
-    test("ends when time runs out", async () => {
+    test("ends with a loss when time runs out", async () => {
       const user = userEvent.setup();
       render(<Game timerStartValues={{seconds: 1}} />);
       await user.click(screen.getByText("Start!"));
 
       await screen.findByText("00:00", {}, {timeout: 2000});
+      const input = screen.getByRole("textbox");
+      expect(input).toHaveValue("");
+      expect(input).toBeDisabled();
       expect(screen.getByText("Reset", { selector: "button"})).toBeInTheDocument();
       expect(screen.getAllByRole("listitem").length).toEqual(COUNTRIES_ALIASES.size);
     });

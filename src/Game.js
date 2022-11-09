@@ -24,8 +24,8 @@ function Game(props) {
     timer.start();
   }
 
-  const endGame = useCallback(() => {
-    setGameState(GAME_STATES.ENDED);
+  const endGame = useCallback((won) => {
+    setGameState(won ? GAME_STATES.WON : GAME_STATES.LOST);
     setGuess("");
     setLastMatch("");
     timer.pause();
@@ -54,8 +54,10 @@ function Game(props) {
   }
 
   useEffect(() => {
-    if (timesUp || guessedCountries.size === COUNTRIES_ALIASES.size) {
-      endGame();
+    if (guessedCountries.size === COUNTRIES_ALIASES.size) {
+      endGame(true);
+    } else if (timesUp) {
+      endGame(false);
     }
   }, [timesUp, guessedCountries, endGame]);
 
@@ -75,8 +77,12 @@ function Game(props) {
                     />
                 }
                 {
-                  gameState !== GAME_STATES.PLAYING &&
+                  [GAME_STATES.IDLE, GAME_STATES.LOST].includes(gameState) &&
                     <Form.Control disabled />
+                }
+                {
+                  gameState === GAME_STATES.WON &&
+                    <span className="won">YOU WIN!</span>
                 }
               </Form.Group>
             </Form>
@@ -85,8 +91,8 @@ function Game(props) {
         <div className="col-sm-2">
           <div className="m-2">
             { gameState === GAME_STATES.IDLE && <Button onClick={startGame}>Start!</Button> }
-            { gameState === GAME_STATES.PLAYING && <Button onClick={endGame}>End</Button> }
-            { gameState === GAME_STATES.ENDED && <Button onClick={resetGame}>Reset</Button> }
+            { gameState === GAME_STATES.PLAYING && <Button onClick={() => endGame(false)}>End</Button> }
+            { [GAME_STATES.WON, GAME_STATES.LOST].includes(gameState) && <Button onClick={resetGame}>Reset</Button> }
           </div>
         </div>
         <div className="col-sm-2">
@@ -104,7 +110,7 @@ function Game(props) {
         <div className="col-sm-12">
           <TextResults
             guessedCountries={guessedCountries}
-            showMissed={gameState === GAME_STATES.ENDED}
+            showMissed={gameState === GAME_STATES.LOST}
             lastMatch={lastMatch}
           />
         </div>

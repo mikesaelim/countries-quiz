@@ -4,13 +4,18 @@ import Game from "./Game";
 import SpoilerTag from "./SpoilerTag";
 
 function App() {
+  const mapless = new URLSearchParams(window.location.search).has("mapless");
+
   return (
     <div className="App">
       <div className="content mx-auto">
-        <h3 className="title m-5">
+        <h3 className="title m-4">
           Can you name all the countries?
         </h3>
-        <Game />
+        <div className="mapless-link m-3">
+          { mapless ? <a href="?">Map version</a> : <a href="?mapless">Mapless version</a> }
+        </div>
+        <Game mapless={mapless} />
         <div className="description m-5">
           <p>
             Created by <a href="https://mikesaelim.github.io/">Mike Saelim</a> so that he could have a version of <a href="https://www.sporcle.com/games/g/world">Sporcle's quiz</a> with a bigger map. (Map version in development.)

@@ -1,7 +1,19 @@
+.App a {
+  text-decoration: none;
+}
+
+.App a:hover {
+  text-decoration: underline;
+}
+
 .App .content {
   max-width: 1080px;
 }
 
 .App .title {
   text-align: center;
+}
+
+.App .mapless-link {
+  text-align: right;
 }

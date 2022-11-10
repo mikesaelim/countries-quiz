@@ -4,6 +4,7 @@ import useTimer from "easytimer-react-hook";
 
 import "./Game.css";
 import {ALIAS_TO_COUNTRY, COUNTRIES_ALIASES, GAME_STATES} from "./Constants";
+import MapResults from "./MapResults";
 import {standardizeGuess} from "./Standardize";
 import TextResults from "./TextResults";
 
@@ -115,7 +116,7 @@ function Game(props) {
                 showMissed={gameState === GAME_STATES.LOST}
                 lastMatch={lastMatch}
               /> :
-              <TextResults
+              <MapResults
                 guessedCountries={guessedCountries}
                 showMissed={gameState === GAME_STATES.LOST}
                 lastMatch={lastMatch}

@@ -7,7 +7,7 @@
 }
 
 .App .content {
-  max-width: 1080px;
+  max-width: 1320px;
 }
 
 .App .title {
@@ -15,5 +15,10 @@
 }
 
 .App .mapless-link {
+  max-width: 960px;
   text-align: right;
+}
+
+.App .description {
+  max-width: 960px;
 }

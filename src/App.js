@@ -16,7 +16,7 @@ function App() {
           { mapless ? <a href="?">Map version</a> : <a href="?mapless">Mapless version</a> }
         </div>
         <Game mapless={mapless} />
-        <div className="description m-5">
+        <div className="description my-5 mx-auto">
           <p>
             Created by <a href="https://mikesaelim.github.io/">Mike Saelim</a> so that he could have a version of <a href="https://www.sporcle.com/games/g/world">Sporcle's quiz</a> with a bigger map. (Map version in development.)
           </p>

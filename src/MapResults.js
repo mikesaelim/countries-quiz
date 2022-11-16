@@ -1,11 +1,19 @@
 import L from "leaflet";
-import { MapContainer, TileLayer } from "react-leaflet";
+import { LayerGroup, MapContainer, Marker, TileLayer } from "react-leaflet";
 
 import "./MapResults.css";
 import "leaflet/dist/leaflet.css";
+import questionMarkIconImage from "./icons8-question-mark-64.png";
+
+const questionMarkIcon = L.icon({
+  iconUrl: questionMarkIconImage,
+  iconSize: [15, 15]
+});
 
 function MapResults(props) {
   const latLngBounds = [[-60, -180], [75, 180]];
+  const usDivIcon = L.divIcon({ html: "<div>United States</div>", className: "", iconSize: [100, 25] });
+
   return (
     <div className="map-results">
       <MapContainer
@@ -27,6 +35,13 @@ function MapResults(props) {
           bounds={latLngBounds}
           noWrap={true}
         />
+        <LayerGroup>
+          {
+            props.guessedCountries.has("United States") ?
+              <Marker position={[38, -85]} icon={usDivIcon} /> :
+              <Marker position={[38, -85]} icon={questionMarkIcon} />
+          }
+        </LayerGroup>
       </MapContainer>
     </div>
   );

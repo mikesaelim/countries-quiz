@@ -4,15 +4,34 @@ import { LayerGroup, MapContainer, Marker, TileLayer } from "react-leaflet";
 import "./MapResults.css";
 import "leaflet/dist/leaflet.css";
 import questionMarkIconImage from "./icons8-question-mark-64.png";
+import { COUNTRY_DATA } from "./Constants";
 
 const questionMarkIcon = L.icon({
   iconUrl: questionMarkIconImage,
   iconSize: [15, 15]
 });
 
+function makeDivIcon(countryName) {
+  return L.divIcon({ html: `<div class="text-center">${countryName}</div>`, className: "", iconSize: [100, 20]});
+}
+
 function MapResults(props) {
   const latLngBounds = [[-60, -180], [75, 180]];
-  const usDivIcon = L.divIcon({ html: "<div>United States</div>", className: "", iconSize: [100, 25] });
+
+  let markers;
+  if (!props.showMissed) {
+    markers = COUNTRY_DATA.map((country) => {
+      if (props.guessedCountries.has(country.name)) {
+        return <Marker position={country.markerLatLng} icon={makeDivIcon(country.name)} key={country.name} />;
+      } else {
+        return <Marker position={country.markerLatLng} icon={questionMarkIcon} key={country.name} />;
+      }
+    });
+  } else {
+    markers = COUNTRY_DATA.map((country) => {
+      return <Marker position={country.markerLatLng} icon={makeDivIcon(country.name)} key={country.name} />;
+    });
+  }
 
   return (
     <div className="map-results">
@@ -36,11 +55,7 @@ function MapResults(props) {
           noWrap={true}
         />
         <LayerGroup>
-          {
-            props.guessedCountries.has("United States") ?
-              <Marker position={[38, -85]} icon={usDivIcon} /> :
-              <Marker position={[38, -85]} icon={questionMarkIcon} />
-          }
+          { markers }
         </LayerGroup>
       </MapContainer>
     </div>

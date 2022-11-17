@@ -453,7 +453,7 @@ export const COUNTRY_DATA = [
   {
     "name": "Kiribati",
     "aliases": [],
-    "markerLatLng": [1.829, -157.401]
+    "markerLatLng": [1.350, 173.039]
   },
   {
     "name": "Kosovo",

@@ -23,6 +23,13 @@ describe("COUNTRY_DATA", () => {
     const countryNames = COUNTRY_DATA.map(c => c.name);
     expect([...countryNames].sort()).toEqual(countryNames);
   });
+
+  test("has the required data for each country", () => {
+    COUNTRY_DATA.forEach(c => {
+      expect(c.markerLatLng).toBeInstanceOf(Array);
+      expect(c.markerLatLng.length).toEqual(2);
+    });
+  });
 });
 
 describe("COUNTRIES", () => {

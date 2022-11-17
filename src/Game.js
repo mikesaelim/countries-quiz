@@ -3,7 +3,7 @@ import {Button, Form} from "react-bootstrap";
 import useTimer from "easytimer-react-hook";
 
 import "./Game.css";
-import {ALIAS_TO_COUNTRY, COUNTRIES_ALIASES, GAME_STATES} from "./Constants";
+import {ALIAS_TO_COUNTRY, COUNTRIES, GAME_STATES} from "./Constants";
 import MapResults from "./MapResults";
 import {standardizeGuess} from "./Standardize";
 import TextResults from "./TextResults";
@@ -55,7 +55,7 @@ function Game(props) {
   }
 
   useEffect(() => {
-    if (guessedCountries.size === COUNTRIES_ALIASES.size) {
+    if (guessedCountries.size === COUNTRIES.length) {
       endGame(true);
     } else if (timesUp) {
       endGame(false);
@@ -98,7 +98,7 @@ function Game(props) {
         </div>
         <div className="col-sm-2">
           <div className="m-2">
-            { guessedCountries.size } / { COUNTRIES_ALIASES.size }
+            { guessedCountries.size } / { COUNTRIES.length }
           </div>
         </div>
         <div className="col-sm-2">

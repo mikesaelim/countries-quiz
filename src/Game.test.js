@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { COUNTRIES_ALIASES } from "./Constants";
+import { COUNTRIES } from "./Constants";
 import Game from "./Game";
 
 describe("Game", () => {
@@ -48,11 +48,11 @@ describe("Game", () => {
         expect(input).toBeDisabled();
         expect(screen.getByText("Reset", { selector: "button" })).toBeInTheDocument();
         expect(screen.getByText("Norway")).toBeInTheDocument();
-        expect(screen.getAllByRole("listitem").length).toEqual(COUNTRIES_ALIASES.size);
+        expect(screen.getAllByRole("listitem").length).toEqual(COUNTRIES.length);
       });
 
       test("ends with a win when all countries are guessed", async () => {
-        const initialGuessedCountries = new Set([...COUNTRIES_ALIASES.keys()].filter(c => c !== "San Marino"));
+        const initialGuessedCountries = new Set(COUNTRIES.filter(c => c !== "San Marino"));
 
         const user = userEvent.setup();
         render(<Game mapless={true} initialGuessedCountries={initialGuessedCountries} />);
@@ -63,7 +63,7 @@ describe("Game", () => {
 
         expect(screen.getByText("YOU WIN!")).toBeInTheDocument();
         expect(screen.getByText("Reset", { selector: "button" })).toBeInTheDocument();
-        expect(screen.getAllByRole("listitem").length).toEqual(COUNTRIES_ALIASES.size);
+        expect(screen.getAllByRole("listitem").length).toEqual(COUNTRIES.length);
       });
       test("ends with a loss when time runs out", async () => {
         const user = userEvent.setup();
@@ -75,7 +75,7 @@ describe("Game", () => {
         expect(input).toHaveValue("");
         expect(input).toBeDisabled();
         expect(screen.getByText("Reset", { selector: "button"})).toBeInTheDocument();
-        expect(screen.getAllByRole("listitem").length).toEqual(COUNTRIES_ALIASES.size);
+        expect(screen.getAllByRole("listitem").length).toEqual(COUNTRIES.length);
       });
     });
 
@@ -88,7 +88,7 @@ describe("Game", () => {
 
         const resetButton = screen.getByText("Reset");
         expect(resetButton).toBeInTheDocument();
-        expect(screen.getAllByRole("listitem").length).toEqual(COUNTRIES_ALIASES.size);
+        expect(screen.getAllByRole("listitem").length).toEqual(COUNTRIES.length);
 
         await user.click(resetButton);
         const input = screen.getByRole("textbox");

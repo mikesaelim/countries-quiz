@@ -56,6 +56,11 @@
       "space-unary-ops": "error"
     }
   },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-leaflet)/"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",

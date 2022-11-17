@@ -1,5 +1,5 @@
 import "./App.css";
-import { COUNTRIES_ALIASES } from "./Constants";
+import { COUNTRIES } from "./Constants";
 import Game from "./Game";
 import SpoilerTag from "./SpoilerTag";
 
@@ -27,7 +27,7 @@ function App() {
             What is or isn't a country can be contentious, and when you make a quiz about the countries of the world, there's no neutral position to take on the issue. You have to include some and exclude others. I am not a geographer, so I mostly outsource these decisions.
           </p>
           <p>
-            The {COUNTRIES_ALIASES.size} countries in this quiz are the UN member states and General Assembly observer states from <a href="https://en.wikipedia.org/wiki/List_of_sovereign_states">Wikipedia's List of Sovereign States</a>. Plus <SpoilerTag>Kosovo</SpoilerTag> and <SpoilerTag>Taiwan</SpoilerTag>, which my country <a href="https://www.state.gov/independent-states-in-the-world/">formally or semi-formally recognizes</a> as independent states. I've tried to accept all the common English names for these countries, listed on their Wikipedia pages.
+            The {COUNTRIES.length} countries in this quiz are the UN member states and General Assembly observer states from <a href="https://en.wikipedia.org/wiki/List_of_sovereign_states">Wikipedia's List of Sovereign States</a>. Plus <SpoilerTag>Kosovo</SpoilerTag> and <SpoilerTag>Taiwan</SpoilerTag>, which my country <a href="https://www.state.gov/independent-states-in-the-world/">formally or semi-formally recognizes</a> as independent states. I've tried to accept all the common English names for these countries, listed on their Wikipedia pages.
           </p>
 
           <h5>How is this built?</h5>

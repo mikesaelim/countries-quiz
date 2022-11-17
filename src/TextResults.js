@@ -1,6 +1,6 @@
 import "./TextResults.css";
 
-import {COUNTRIES_ALIASES} from "./Constants";
+import { COUNTRIES } from "./Constants";
 
 function TextResults(props) {
   var countries;
@@ -13,7 +13,7 @@ function TextResults(props) {
       }
     });
   } else {
-    countries = [...COUNTRIES_ALIASES.keys()].map(c => {
+    countries = COUNTRIES.map(c => {
       if (props.guessedCountries.has(c)) {
         return <li key={c}>{c}</li>;
       } else {

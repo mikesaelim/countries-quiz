@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { COUNTRIES_ALIASES } from "./Constants";
+import { COUNTRIES } from "./Constants";
 import TextResults from "./TextResults";
 
 describe("TextResults", () => {
@@ -45,7 +45,7 @@ describe("TextResults", () => {
       );
 
       const countries = screen.getAllByRole("listitem").map(e => e.textContent);
-      expect(countries).toEqual([...COUNTRIES_ALIASES.keys()]);
+      expect(countries).toEqual(COUNTRIES);
       expect([...countries].sort()).toEqual(countries);
     });
 
@@ -62,7 +62,7 @@ describe("TextResults", () => {
         expect(screen.getByText(country)).not.toHaveClass("missed");
       });
 
-      let missedCountries = [...COUNTRIES_ALIASES.keys()].filter(c => !guessedCountries.has(c));
+      let missedCountries = COUNTRIES.filter(c => !guessedCountries.has(c));
       missedCountries.forEach(country => {
         expect(screen.getByText(country)).toHaveClass("missed");
       });

@@ -7,6 +7,8 @@ export const GAME_STATES = {
   LOST: "LOST"
 };
 
+export const MAP_LATLNG_BOUNDS = [[-60, -160], [75, 200]];
+
 export const COUNTRY_DATA = [
   // Mostly taken from https://en.wikipedia.org/wiki/List_of_sovereign_states
   // plus Kosovo and Taiwan
@@ -758,7 +760,7 @@ export const COUNTRY_DATA = [
   {
     "name": "Samoa",
     "aliases": [],
-    "markerLatLng": [-13.673, -172.447]
+    "markerLatLng": [-13.673, -172.447 + 360]
   },
   {
     "name": "San Marino",
@@ -898,7 +900,7 @@ export const COUNTRY_DATA = [
   {
     "name": "Tonga",
     "aliases": [],
-    "markerLatLng": [-21.188, -175.189]
+    "markerLatLng": [-21.188, -175.189 + 360]
   },
   {
     "name": "Trinidad and Tobago",

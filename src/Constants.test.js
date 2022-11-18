@@ -1,4 +1,4 @@
-import { COUNTRY_DATA, COUNTRIES, ALIAS_TO_COUNTRY } from "./Constants";
+import { COUNTRY_DATA, COUNTRIES, ALIAS_TO_COUNTRY, MAP_LATLNG_BOUNDS } from "./Constants";
 import { standardizeGuess } from "./Standardize";
 
 const EXPECTED_NUMBER_OF_COUNTRIES = 197;
@@ -24,10 +24,19 @@ describe("COUNTRY_DATA", () => {
     expect([...countryNames].sort()).toEqual(countryNames);
   });
 
-  test("has the required data for each country", () => {
+  test("has valid marker positions for each country", () => {
+    const minLatitude = MAP_LATLNG_BOUNDS[0][0];
+    const maxLatitude = MAP_LATLNG_BOUNDS[1][0];
+    const minLongitude = MAP_LATLNG_BOUNDS[0][1];
+    const maxLongitude = MAP_LATLNG_BOUNDS[1][1];
+
     COUNTRY_DATA.forEach(c => {
       expect(c.markerLatLng).toBeInstanceOf(Array);
       expect(c.markerLatLng.length).toEqual(2);
+      expect(c.markerLatLng[0]).toBeGreaterThan(minLatitude);
+      expect(c.markerLatLng[0]).toBeLessThan(maxLatitude);
+      expect(c.markerLatLng[1]).toBeGreaterThan(minLongitude);
+      expect(c.markerLatLng[1]).toBeLessThan(maxLongitude);
     });
   });
 });

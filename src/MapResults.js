@@ -4,7 +4,7 @@ import { LayerGroup, MapContainer, Marker, TileLayer } from "react-leaflet";
 import "./MapResults.css";
 import "leaflet/dist/leaflet.css";
 import questionMarkIconImage from "./icons8-question-mark-64.png";
-import { COUNTRY_DATA } from "./Constants";
+import { COUNTRY_DATA, MAP_LATLNG_BOUNDS } from "./Constants";
 
 const questionMarkIcon = L.icon({
   iconUrl: questionMarkIconImage,
@@ -16,8 +16,6 @@ function makeDivIcon(countryName) {
 }
 
 function MapResults(props) {
-  const latLngBounds = [[-60, -180], [75, 180]];
-
   let markers;
   if (!props.showMissed) {
     markers = COUNTRY_DATA.map((country) => {
@@ -34,13 +32,13 @@ function MapResults(props) {
   }
 
   return (
-    <div className="map-results">
+    <div className="map-results mx-auto">
       <MapContainer
-        center={[30, 0]}
+        center={[30, 20]}
         zoom={2}
         minZoom={2}
         maxZoom={5}
-        maxBounds={latLngBounds}
+        maxBounds={MAP_LATLNG_BOUNDS}
         maxBoundsViscosity={1.0}
         className="map"
       >
@@ -51,8 +49,7 @@ function MapResults(props) {
           attribution={"&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>, &copy; <a href=\"https://carto.com/attributions\">CARTO</a>"}
           minZoom={2}
           maxZoom={5}
-          bounds={latLngBounds}
-          noWrap={true}
+          bounds={MAP_LATLNG_BOUNDS}
         />
         <LayerGroup>
           { markers }

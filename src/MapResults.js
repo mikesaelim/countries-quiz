@@ -11,8 +11,8 @@ const questionMarkIcon = L.icon({
   iconSize: [15, 15]
 });
 
-function makeDivIcon(countryName) {
-  return L.divIcon({ html: `<div class="text-center">${countryName}</div>`, className: "", iconSize: [100, 20]});
+function makeDivIcon(countryName, classString = "") {
+  return L.divIcon({ html: `<div class="text-center ${classString}">${countryName}</div>`, className: "", iconSize: [100, 20]});
 }
 
 function MapResults(props) {
@@ -20,14 +20,22 @@ function MapResults(props) {
   if (!props.showMissed) {
     markers = COUNTRY_DATA.map((country) => {
       if (props.guessedCountries.has(country.name)) {
-        return <Marker position={country.markerLatLng} icon={makeDivIcon(country.name)} key={country.name} />;
+        if (country.name === props.lastMatch) {
+          return <Marker position={country.markerLatLng} icon={makeDivIcon(country.name, "last-match")} key={country.name} />;
+        } else {
+          return <Marker position={country.markerLatLng} icon={makeDivIcon(country.name)} key={country.name} />;
+        }
       } else {
         return <Marker position={country.markerLatLng} icon={questionMarkIcon} key={country.name} />;
       }
     });
   } else {
     markers = COUNTRY_DATA.map((country) => {
-      return <Marker position={country.markerLatLng} icon={makeDivIcon(country.name)} key={country.name} />;
+      if (props.guessedCountries.has(country.name)) {
+        return <Marker position={country.markerLatLng} icon={makeDivIcon(country.name)} key={country.name} />;
+      } else {
+        return <Marker position={country.markerLatLng} icon={makeDivIcon(country.name, "missed")} key={country.name} />;
+      }
     });
   }
 

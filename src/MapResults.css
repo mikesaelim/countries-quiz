@@ -7,3 +7,12 @@
   height: 600px;
   width: 1024px;
 }
+
+.App .map-results .last-match {
+  color: green;
+  font-weight: bold;
+}
+
+.App .map-results .missed {
+  color: red;
+}

@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/countries-quiz/static/css/main.3c2ff6b9.css",
-    "main.js": "/countries-quiz/static/js/main.05063dcc.js",
+    "main.css": "/countries-quiz/static/css/main.7d38e7a4.css",
+    "main.js": "/countries-quiz/static/js/main.3075cff3.js",
     "static/js/787.39742a89.chunk.js": "/countries-quiz/static/js/787.39742a89.chunk.js",
     "index.html": "/countries-quiz/index.html",
-    "main.3c2ff6b9.css.map": "/countries-quiz/static/css/main.3c2ff6b9.css.map",
-    "main.05063dcc.js.map": "/countries-quiz/static/js/main.05063dcc.js.map",
+    "main.7d38e7a4.css.map": "/countries-quiz/static/css/main.7d38e7a4.css.map",
+    "main.3075cff3.js.map": "/countries-quiz/static/js/main.3075cff3.js.map",
     "787.39742a89.chunk.js.map": "/countries-quiz/static/js/787.39742a89.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3c2ff6b9.css",
-    "static/js/main.05063dcc.js"
+    "static/css/main.7d38e7a4.css",
+    "static/js/main.3075cff3.js"
   ]
 }

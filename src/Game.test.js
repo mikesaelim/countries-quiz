@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { COUNTRIES } from "./Constants";
-import Game from "./Game";
+import Game, { timeDifferenceString } from "./Game";
 
 describe("Game", () => {
   // Using the mapless version to get feedback on the displayed results
@@ -62,7 +62,7 @@ describe("Game", () => {
       const input = screen.getByRole("textbox");
       await user.type(input, "San Marino");
 
-      expect(screen.getByText("YOU WIN!")).toBeInTheDocument();
+      expect(screen.getByText(/YOU WIN IN \d{2}:\d{2}!/)).toBeInTheDocument();
       expect(screen.getByText("Reset", { selector: "button" })).toBeInTheDocument();
       expect(screen.getAllByRole("listitem").length).toEqual(COUNTRIES.length);
     });
@@ -99,5 +99,13 @@ describe("Game", () => {
       expect(screen.getByText("15:00")).toBeInTheDocument();
       expect(screen.queryByRole("listitem")).not.toBeInTheDocument();
     });
+  });
+});
+
+describe("timeDifferenceString", () => {
+  test("returns the time difference in minutes and seconds", () => {
+    expect(timeDifferenceString({ minutes: 15 }, { minutes: 7, seconds: 12 })).toEqual("07:48");
+    expect(timeDifferenceString({ minutes: 15 }, { seconds: 35 })).toEqual("14:25");
+    expect(timeDifferenceString({ minutes: 15 }, { minutes: 15 })).toEqual("00:00");
   });
 });

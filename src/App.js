@@ -43,7 +43,7 @@ function App() {
             This is built with <a href="https://reactjs.org/">React</a>, <a href="https://leafletjs.com/">Leaflet</a>, and <a href="https://react-leaflet.js.org/">react-leaflet</a>.
             Basemap data comes from <a href="https://www.openstreetmap.org/">OpenStreetMap</a>.
             While the map's pseudo-Mercator projection <a href="https://en.wikipedia.org/wiki/Mercator_projection#Distortion_of_sizes">has significant issues</a>, it has become the de facto standard for maps on the web.
-            The question mark icon comes from <a href="https://icons8.com">Icons8</a>.
+            The question mark and globe icons come from <a href="https://icons8.com">Icons8</a>.
           </p>
           <p>
             Despite being a knockoff of Sporcle's quiz, it uses none of their code.

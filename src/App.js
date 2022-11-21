@@ -12,7 +12,7 @@ function App() {
         <h3 className="title m-4">
           Can you name all the countries?
         </h3>
-        <div className="mapless-link m-3">
+        <div className="mapless-link my-2 mx-auto">
           { mapless ? <a href="?">Map version</a> : <a href="?mapless">Mapless version</a> }
         </div>
         <Game mapless={mapless} />

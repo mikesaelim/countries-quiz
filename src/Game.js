@@ -110,19 +110,21 @@ function Game(props) {
       </div>
       <div className="row">
         <div className="col-sm-12">
-          {
-            props.mapless ?
-              <TextResults
-                guessedCountries={guessedCountries}
-                showMissed={gameState === GAME_STATES.LOST}
-                lastMatch={lastMatch}
-              /> :
-              <MapResults
-                guessedCountries={guessedCountries}
-                showMissed={gameState === GAME_STATES.LOST}
-                lastMatch={lastMatch}
-              />
-          }
+          <div className="m-1">
+            {
+              props.mapless ?
+                <TextResults
+                  guessedCountries={guessedCountries}
+                  showMissed={gameState === GAME_STATES.LOST}
+                  lastMatch={lastMatch}
+                /> :
+                <MapResults
+                  guessedCountries={guessedCountries}
+                  showMissed={gameState === GAME_STATES.LOST}
+                  lastMatch={lastMatch}
+                />
+            }
+          </div>
         </div>
       </div>
     </div>

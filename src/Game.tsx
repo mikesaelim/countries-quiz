@@ -1,18 +1,25 @@
-import {useCallback, useEffect, useState} from "react";
-import {Button, Form} from "react-bootstrap";
+import { useCallback, useEffect, useState } from "react";
+import { Button, Form } from "react-bootstrap";
+import { TimerValues } from "easytimer.js";
 import useTimer from "easytimer-react-hook";
 
 import "./Game.css";
-import {ALIAS_TO_COUNTRY, COUNTRIES, GAME_STATES} from "./Constants";
+import { ALIAS_TO_COUNTRY, COUNTRIES, GAME_STATES } from "./Constants";
 import MapResults from "./MapResults";
-import {standardizeGuess} from "./Standardize";
+import { standardizeGuess } from "./Standardize";
 import TextResults from "./TextResults";
 
-function Game(props) {
+type GameProps = {
+  mapless: boolean;
+  initialGuessedCountries?: Set<string>;
+  timerStartValues?: TimerValues;
+};
+
+function Game(props: GameProps) {
   const timerStartValues = props.timerStartValues || { minutes: 15 };
   const [gameState, setGameState] = useState(GAME_STATES.IDLE);
   const [guess, setGuess] = useState("");
-  const [guessedCountries, setGuessedCountries] = useState(props.initialGuessedCountries || new Set());
+  const [guessedCountries, setGuessedCountries] = useState(props.initialGuessedCountries || new Set<string>());
   const [lastMatch, setLastMatch] = useState("");
   const [timer, timesUp] = useTimer({
     startValues: timerStartValues,
@@ -26,7 +33,7 @@ function Game(props) {
     timer.start();
   }
 
-  const endGame = useCallback((won) => {
+  const endGame = useCallback((won: boolean) => {
     setGameState(won ? GAME_STATES.WON : GAME_STATES.LOST);
     setGuess("");
     setLastMatch("");
@@ -42,7 +49,7 @@ function Game(props) {
     timer.pause(); // easytimer.js is strange in that reset automatically restarts the timer
   }
 
-  function handleGuess(newGuess) {
+  function handleGuess(newGuess: string) {
     setGuess(newGuess);
 
     const match = ALIAS_TO_COUNTRY.get(standardizeGuess(newGuess));
@@ -131,7 +138,7 @@ function Game(props) {
   );
 }
 
-export function timeDifferenceString(t1, t2) {
+export function timeDifferenceString(t1: TimerValues, t2: TimerValues) {
   // Only works with minutes and seconds because I can't be bothered
   const differenceInSeconds = (t1.minutes || 0) * 60 + (t1.seconds || 0) - ((t2.minutes || 0) * 60 + (t2.seconds || 0));
   return `${Math.floor(differenceInSeconds / 60).toString().padStart(2, "0")}:${(differenceInSeconds % 60).toString().padStart(2, "0")}`;

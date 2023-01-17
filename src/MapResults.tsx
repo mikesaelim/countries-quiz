@@ -6,16 +6,22 @@ import "leaflet/dist/leaflet.css";
 import questionMarkIconImage from "./icons8-question-mark-64.png";
 import { COUNTRY_DATA, MAP_LATLNG_BOUNDS } from "./Constants";
 
+type MapResultsProps = {
+  guessedCountries: Set<string>;
+  showMissed: boolean;
+  lastMatch: string;
+};
+
 const questionMarkIcon = L.icon({
   iconUrl: questionMarkIconImage,
   iconSize: [15, 15]
 });
 
-function makeDivIcon(countryName, classString = "") {
+function makeDivIcon(countryName: string, classString = "") {
   return L.divIcon({ html: `<div class="text-center ${classString}">${countryName}</div>`, className: "", iconSize: [100, 20]});
 }
 
-function MapResults(props) {
+function MapResults(props: MapResultsProps) {
   let markers;
   if (!props.showMissed) {
     markers = COUNTRY_DATA.map((country) => {

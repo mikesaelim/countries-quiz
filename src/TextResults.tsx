@@ -2,7 +2,13 @@ import "./TextResults.css";
 
 import { COUNTRIES } from "./Constants";
 
-function TextResults(props) {
+type TextResultsProps = {
+  guessedCountries: Set<string>;
+  showMissed: boolean;
+  lastMatch: string;
+};
+
+function TextResults(props: TextResultsProps) {
   var countries;
   if (!props.showMissed) {
     countries = [...props.guessedCountries].sort().map(c => {

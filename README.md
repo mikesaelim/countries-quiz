@@ -6,7 +6,7 @@ Silly frontend app that challenges the user to name all the countries of the wor
 
 Basically, I wanted a version of Sporcle's quiz that had a bigger map, so I made this for myself.
 
-Under the covers, this is a very simple [React](https://reactjs.org/) app bootstrapped with [Create React App](https://github.com/facebook/create-react-app), with [Leaflet](https://leafletjs.com/) and [react-leaflet](https://react-leaflet.js.org/) for the map display.
+Under the covers, this is a very simple [TypeScript](https://www.typescriptlang.org/) + [React](https://reactjs.org/) app bootstrapped with [Create React App](https://github.com/facebook/create-react-app), with [Leaflet](https://leafletjs.com/) and [react-leaflet](https://react-leaflet.js.org/) for the map display.
 
 ----
 

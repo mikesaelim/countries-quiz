@@ -1,7 +1,7 @@
 import "./SpoilerTag.css";
-import { useState } from "react";
+import { PropsWithChildren, useState } from "react";
 
-function SpoilerTag(props) {
+function SpoilerTag(props: PropsWithChildren) {
   const [revealed, setRevealed] = useState(false);
 
   return (

@@ -9,7 +9,7 @@ describe("COUNTRY_DATA", () => {
   });
 
   test("has no duplicated country names or aliases, after standardization", () => {
-    const allStrings = [];
+    const allStrings: string[] = [];
     COUNTRY_DATA.forEach(c => {
       allStrings.push(standardizeGuess(c.name));
       c.aliases.forEach(alias => allStrings.push(standardizeGuess(alias)));

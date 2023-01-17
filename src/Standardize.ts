@@ -1,4 +1,4 @@
-export function standardizeGuess(guess) {
+export function standardizeGuess(guess: string): string {
   return guess
     .trim()
     .toLowerCase()

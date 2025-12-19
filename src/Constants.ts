@@ -260,11 +260,6 @@ export const COUNTRY_DATA: CountryDataType[] = [
     markerLatLng: [18.886, -70.276]
   },
   {
-    name: "East Timor",
-    aliases: ["Timor-Leste"],
-    markerLatLng: [-8.725, 126.056]
-  },
-  {
     name: "Ecuador",
     aliases: [],
     markerLatLng: [-1.430, -78.652]
@@ -900,6 +895,11 @@ export const COUNTRY_DATA: CountryDataType[] = [
     markerLatLng: [14.732, 100.771]
   },
   {
+    name: "Timor-Leste",
+    aliases: ["East Timor"],
+    markerLatLng: [-8.725, 126.056]
+  },
+  {
     name: "Togo",
     aliases: [],
     markerLatLng: [8.433, 1.081]
@@ -921,7 +921,7 @@ export const COUNTRY_DATA: CountryDataType[] = [
   },
   {
     name: "Turkey",
-    aliases: [],
+    aliases: ["Türkiye"],
     markerLatLng: [39.066, 35.060]
   },
   {

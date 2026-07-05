@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { TimerValues } from "easytimer.js";
 import useTimer from "easytimer-react-hook";
 
 import "./Game.css";
@@ -12,23 +11,16 @@ import TextResults from "./TextResults";
 type GameProps = {
   mapless: boolean;
   initialGuessedCountries?: Set<string>;
-  timerStartValues?: TimerValues;
 };
 
 function Game(props: GameProps) {
-  const timerStartValues = props.timerStartValues || { minutes: 15 };
   const gameRef = useRef<HTMLDivElement>(null);
   const [gameState, setGameState] = useState(GAME_STATES.IDLE);
   const [guess, setGuess] = useState("");
   const [guessedCountries, setGuessedCountries] = useState(props.initialGuessedCountries || new Set<string>());
   const [lastMatch, setLastMatch] = useState("");
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [timer, timesUp] = useTimer({
-    startValues: timerStartValues,
-    target: {seconds: 0},
-    countdown: true,
-    updateWhenTargetAchieved: true
-  });
+  const [timer] = useTimer();
 
   function startGame() {
     setGameState(GAME_STATES.PLAYING);
@@ -75,10 +67,8 @@ function Game(props: GameProps) {
   useEffect(() => {
     if (guessedCountries.size === COUNTRIES.length) {
       endGame(true);
-    } else if (timesUp) {
-      endGame(false);
     }
-  }, [timesUp, guessedCountries, endGame]);
+  }, [guessedCountries, endGame]);
 
   useEffect(() => {
     const handleFullscreenChange = () => setIsFullscreen(Boolean(getFullscreenElement()));
@@ -121,7 +111,7 @@ function Game(props: GameProps) {
                 }
                 {
                   gameState === GAME_STATES.WON &&
-                    <span className="won">YOU WIN IN {timeDifferenceString(timerStartValues, timer.getTimeValues())}!</span>
+                    <span className="won">YOU WIN IN {timer.getTimeValues().toString(["minutes", "seconds"])}!</span>
                 }
               </Form.Group>
             </Form>
@@ -190,12 +180,6 @@ function exitFullscreen() {
 function getFullscreenElement() {
   const doc = document as Document & { webkitFullscreenElement?: Element | null };
   return document.fullscreenElement || doc.webkitFullscreenElement || null;
-}
-
-export function timeDifferenceString(t1: TimerValues, t2: TimerValues) {
-  // Only works with minutes and seconds because I can't be bothered
-  const differenceInSeconds = (t1.minutes || 0) * 60 + (t1.seconds || 0) - ((t2.minutes || 0) * 60 + (t2.seconds || 0));
-  return `${Math.floor(differenceInSeconds / 60).toString().padStart(2, "0")}:${(differenceInSeconds % 60).toString().padStart(2, "0")}`;
 }
 
 export default Game;

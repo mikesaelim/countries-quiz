@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { COUNTRIES } from "./Constants";
-import Game, { timeDifferenceString } from "./Game";
+import Game from "./Game";
 
 describe("Game", () => {
   // Using the mapless version to get feedback on the displayed results
@@ -13,7 +13,7 @@ describe("Game", () => {
     expect(input).toHaveValue("");
     expect(input).toBeDisabled();
     expect(screen.getByText("Start!", { selector: "button" })).toBeInTheDocument();
-    expect(screen.getByText("15:00")).toBeInTheDocument();
+    expect(screen.getByText("00:00")).toBeInTheDocument();
     expect(screen.queryByRole("listitem")).not.toBeInTheDocument();
   });
 
@@ -66,18 +66,6 @@ describe("Game", () => {
       expect(screen.getByText("Reset", { selector: "button" })).toBeInTheDocument();
       expect(screen.getAllByRole("listitem").length).toEqual(COUNTRIES.length);
     });
-    test("ends with a loss when time runs out", async () => {
-      const user = userEvent.setup();
-      render(<Game mapless={true} timerStartValues={{seconds: 1}} />);
-      await user.click(screen.getByText("Start!"));
-
-      await screen.findByText("00:00", {}, {timeout: 2000});
-      const input = screen.getByRole("textbox");
-      expect(input).toHaveValue("");
-      expect(input).toBeDisabled();
-      expect(screen.getByText("Reset", { selector: "button"})).toBeInTheDocument();
-      expect(screen.getAllByRole("listitem").length).toEqual(COUNTRIES.length);
-    });
   });
 
   describe("in the ended state", () => {
@@ -96,16 +84,8 @@ describe("Game", () => {
       expect(input).toHaveValue("");
       expect(input).toBeDisabled();
       expect(screen.getByText("Start!", { selector: "button" })).toBeInTheDocument();
-      expect(screen.getByText("15:00")).toBeInTheDocument();
+      expect(screen.getByText("00:00")).toBeInTheDocument();
       expect(screen.queryByRole("listitem")).not.toBeInTheDocument();
     });
-  });
-});
-
-describe("timeDifferenceString", () => {
-  test("returns the time difference in minutes and seconds", () => {
-    expect(timeDifferenceString({ minutes: 15 }, { minutes: 7, seconds: 12 })).toEqual("07:48");
-    expect(timeDifferenceString({ minutes: 15 }, { seconds: 35 })).toEqual("14:25");
-    expect(timeDifferenceString({ minutes: 15 }, { minutes: 15 })).toEqual("00:00");
   });
 });

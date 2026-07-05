@@ -1,5 +1,6 @@
 .App .game {
   border: thick double;
+  position: relative;
 }
 
 .App .game .controls {
@@ -12,4 +13,23 @@
   color: green;
   font-size: large;
   font-weight: bold;
+}
+
+.App .game .fullscreen-toggle {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 1100;
+}
+
+.App .game:fullscreen {
+  background-color: white;
+  overflow: auto;
+}
+
+/* Let the map grow to fill the screen when the game is fullscreened. */
+.App .game:fullscreen .map-results,
+.App .game:fullscreen .map-results .map {
+  width: 100%;
+  height: calc(100vh - 90px);
 }

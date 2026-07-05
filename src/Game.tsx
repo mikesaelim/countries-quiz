@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { TimerValues } from "easytimer.js";
 import useTimer from "easytimer-react-hook";
@@ -17,10 +17,12 @@ type GameProps = {
 
 function Game(props: GameProps) {
   const timerStartValues = props.timerStartValues || { minutes: 15 };
+  const gameRef = useRef<HTMLDivElement>(null);
   const [gameState, setGameState] = useState(GAME_STATES.IDLE);
   const [guess, setGuess] = useState("");
   const [guessedCountries, setGuessedCountries] = useState(props.initialGuessedCountries || new Set<string>());
   const [lastMatch, setLastMatch] = useState("");
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [timer, timesUp] = useTimer({
     startValues: timerStartValues,
     target: {seconds: 0},
@@ -62,6 +64,14 @@ function Game(props: GameProps) {
     }
   }
 
+  function toggleFullscreen() {
+    if (getFullscreenElement()) {
+      exitFullscreen();
+    } else if (gameRef.current) {
+      requestFullscreen(gameRef.current);
+    }
+  }
+
   useEffect(() => {
     if (guessedCountries.size === COUNTRIES.length) {
       endGame(true);
@@ -70,8 +80,28 @@ function Game(props: GameProps) {
     }
   }, [timesUp, guessedCountries, endGame]);
 
+  useEffect(() => {
+    const handleFullscreenChange = () => setIsFullscreen(Boolean(getFullscreenElement()));
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
+    };
+  }, []);
+
   return (
-    <div className="container game">
+    <div className="container game" ref={gameRef}>
+      { !props.mapless && (
+        <Button
+          variant="outline-secondary"
+          size="sm"
+          className="fullscreen-toggle"
+          onClick={toggleFullscreen}
+        >
+          { isFullscreen ? "Exit full screen" : "Go full screen" }
+        </Button>
+      )}
       <div className="row align-items-center controls">
         <div className="col-sm-6">
           <div className="m-2">
@@ -136,6 +166,30 @@ function Game(props: GameProps) {
       </div>
     </div>
   );
+}
+
+// The Fullscreen API is still vendor-prefixed in Safari, so wrap the calls.
+function requestFullscreen(element: HTMLElement) {
+  const el = element as HTMLElement & { webkitRequestFullscreen?: () => void };
+  if (el.requestFullscreen) {
+    el.requestFullscreen();
+  } else if (el.webkitRequestFullscreen) {
+    el.webkitRequestFullscreen();
+  }
+}
+
+function exitFullscreen() {
+  const doc = document as Document & { webkitExitFullscreen?: () => void };
+  if (doc.exitFullscreen) {
+    doc.exitFullscreen();
+  } else if (doc.webkitExitFullscreen) {
+    doc.webkitExitFullscreen();
+  }
+}
+
+function getFullscreenElement() {
+  const doc = document as Document & { webkitFullscreenElement?: Element | null };
+  return document.fullscreenElement || doc.webkitFullscreenElement || null;
 }
 
 export function timeDifferenceString(t1: TimerValues, t2: TimerValues) {

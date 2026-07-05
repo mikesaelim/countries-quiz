@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import L from "leaflet";
-import { LayerGroup, MapContainer, Marker, TileLayer } from "react-leaflet";
+import { LayerGroup, MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
 
 import "./MapResults.css";
 import "leaflet/dist/leaflet.css";
@@ -19,6 +20,24 @@ const questionMarkIcon = L.icon({
 
 function makeDivIcon(countryName: string, classString = "") {
   return L.divIcon({ html: `<div class="text-center ${classString}">${countryName}</div>`, className: "", iconSize: [100, 20]});
+}
+
+// Leaflet caches the container size, so it must be told to recalculate after the :fullscreen CSS resizes the map.
+function FullscreenResizeHandler() {
+  const map = useMap();
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      // Defer a tick so the new container dimensions are applied first.
+      window.setTimeout(() => map.invalidateSize(), 0);
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
+    };
+  }, [map]);
+  return null;
 }
 
 function MapResults(props: MapResultsProps) {
@@ -68,6 +87,7 @@ function MapResults(props: MapResultsProps) {
         <LayerGroup>
           { markers }
         </LayerGroup>
+        <FullscreenResizeHandler />
       </MapContainer>
     </div>
   );

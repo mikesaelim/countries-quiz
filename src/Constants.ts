@@ -616,7 +616,7 @@ export const COUNTRY_DATA: CountryDataType[] = [
   },
   {
     name: "Nauru",
-    aliases: [],
+    aliases: ["Naoero"],
     markerLatLng: [-0.529, 166.939]
   },
   {

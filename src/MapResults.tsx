@@ -77,7 +77,7 @@ function MapResults(props: MapResultsProps) {
       >
         <TileLayer
           // https://github.com/CartoDB/basemap-styles
-          url={"https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}" + (L.Browser.retina ? "@2x.png" : ".png")}
+          url={"https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}" + (L.Browser.retina ? "@2x.png" : ".png") + "?key=cb1_5f1h_1_e2c9cd57abb00e44e78e811f"}
           subdomains="abcd"
           attribution={"&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>, &copy; <a href=\"https://carto.com/attributions\">CARTO</a>"}
           minZoom={2}
